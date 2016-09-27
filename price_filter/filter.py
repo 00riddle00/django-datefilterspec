@@ -64,7 +64,7 @@ class PriceRangeForm(PriceRangeFilterBaseForm):
 
 
 class PriceRangeFilter(admin.filters.FieldListFilter):
-    template = 'price_range_filter/filter.html'
+    template = 'templates/filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         self.lookup_kwarg_since = '%s%s__gte' % (FILTER_PREFIX, field_path)

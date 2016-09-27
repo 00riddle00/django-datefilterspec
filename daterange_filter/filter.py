@@ -141,7 +141,7 @@ class DateTimeRangeForm(DateRangeFilterBaseForm):
 
 
 class DateRangeFilter(admin.filters.FieldListFilter):
-    template = 'daterange_filter/filter.html'
+    template = 'templates/filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         self.lookup_kwarg_since = '%s%s__gte' % (FILTER_PREFIX, field_path)
@@ -155,7 +155,7 @@ class DateRangeFilter(admin.filters.FieldListFilter):
         Pop the original parameters, and return the date filter & other filter
         parameters.
         """
-        
+
         cl.params.pop(self.lookup_kwarg_since, None)
         cl.params.pop(self.lookup_kwarg_upto, None)
         return ({
@@ -186,7 +186,7 @@ class DateRangeFilter(admin.filters.FieldListFilter):
 
 
 class DateTimeRangeFilter(admin.filters.FieldListFilter):
-    template = 'daterange_filter/filter.html'
+    template = 'templates/filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         self.lookup_kwarg_since_0 = '%s%s__gte_0' % (FILTER_PREFIX, field_path)

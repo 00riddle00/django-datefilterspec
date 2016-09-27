@@ -55,7 +55,7 @@ class IntegerRangeForm(StringFilterBaseForm):
 
 
 class StringFilter(admin.filters.FieldListFilter):
-    template = 'string_filter/filter.html'
+    template = 'templates/filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         self.lookup_kwarg_iexact = '%s%s__iexact' % (FILTER_PREFIX, field_path)

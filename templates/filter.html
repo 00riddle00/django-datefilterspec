@@ -1,0 +1,56 @@
+{% load i18n admin_static %}
+<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+
+{% block extrahead %}
+{{ super }}
+<script>
+    (function ($) {
+        $(window).on("load", function () {
+
+            $("input[id='clear']").click(function (e) {
+                e.preventDefault();
+                $(this).parent().siblings().find("input[type='text']").val('');
+            });
+
+
+            $("input[id='remove']").click(function (e) {
+                e.preventDefault();
+
+                var url = window.location.href;
+                var inputs = $(this).parent().siblings().find("input[type='text']");
+
+                $.each(inputs, function () {
+
+                    var filter_name = $(this).attr('name');
+                    var regexp = filter_name + "(.*?)(&|$)";
+                    var re = new RegExp(regexp, "gi");
+                    url = url.replace(re, "");
+                });
+                if (url.slice(-1) == '?') {
+                    url = url.slice(0, -1);
+                }
+                window.location.href = url;
+            });
+
+        });
+    })(django.jQuery);
+</script>
+
+{% endblock %}
+
+{% with choices.0 as i %}
+<form method="GET" action="">
+    {{ spec.form.media }}
+    {{ spec.form.as_p }}
+    <p class="submit-row">
+        {#create hidden inputs to preserve values from other filters and search field#}
+        {% for k, v in i.get_query.items %}
+        <input type="hidden" name="{{ k }}" value="{{ v }}">
+        {% endfor %}
+        <input type="submit" id="search" value="{% trans " Search" %}">
+        <input type="submit" id="clear" value="{% trans " Clear" %}">
+        <input type="submit" id="remove" value="{% trans " Drop" %}">
+    </p>
+</form>
+{% endwith %}
+
