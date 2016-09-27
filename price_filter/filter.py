@@ -78,7 +78,7 @@ class PriceRangeFilter(admin.filters.FieldListFilter):
         Pop the original parameters, and return the price filter & other filter
         parameters.
         """
-        
+
         cl.params.pop(self.lookup_kwarg_since, None)
         cl.params.pop(self.lookup_kwarg_upto, None)
         return ({
@@ -100,13 +100,13 @@ class PriceRangeFilter(admin.filters.FieldListFilter):
             lookup_since = self.lookup_kwarg_since.lstrip(FILTER_PREFIX)
             if filter_params.get(lookup_since) is not None:
                 lookup_kwarg_since_value = int(filter_params.pop(lookup_since) * 100)
-                filter_params['%s__gt' % self.field_path] = lookup_kwarg_since_value
+                filter_params['%s__gte' % self.field_path] = lookup_kwarg_since_value
 
             lookup_upto = self.lookup_kwarg_upto.lstrip(FILTER_PREFIX)
             if filter_params.get(lookup_upto) is not None:
                 lookup_kwarg_upto_value = int(filter_params.pop(lookup_upto) * 100)
                 # filter by upto included
-                filter_params['%s__lt' % self.field_path] = lookup_kwarg_upto_value + 1
+                filter_params['%s__lte' % self.field_path] = lookup_kwarg_upto_value
 
             return queryset.filter(**filter_params)
         else:
